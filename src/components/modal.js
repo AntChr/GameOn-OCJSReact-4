@@ -52,6 +52,8 @@ const regExmail = (value) => {
  * firstNameControl, contrôle du prénom sur le champ firstNameInput avec le regexFirstLastName
  * Si le regex est respecté rien ne s'affiche et retourne true
  * Si le regex n'est pas respecté alors un message d'erreur s'affiche et retourne false
+ * voici une illustration de son fonctionnement :
+ * ![Illustration de l'operation](../docs-img/prenom.png)
  */
 function firstNameControl() {
 firstNameInput.addEventListener("input", function () {
@@ -69,7 +71,9 @@ firstNameInput.addEventListener("input", function () {
 })
 }
 firstNameControl()
-
+/**
+ * Contrôle du nom dans le formulaire avec un minimum de deux caractères et retourne true si c'est respecté ou false.
+ */
 function lastNameControl() {
 lastNameInput.addEventListener("input", function () {
   const lastName = lastNameInput.value;
@@ -86,7 +90,9 @@ lastNameInput.addEventListener("input", function () {
 })
 }
 lastNameControl()
-
+/**
+ * Contrôle du mail dans le formulaire pour respecter le format d'un mail et retourne true si c'est respecté ou false.
+ */
 function emailControl() {
 emailInput.addEventListener("input", function () {
   const email = emailInput.value;
@@ -104,6 +110,9 @@ emailInput.addEventListener("input", function () {
 }
 emailControl()
 
+/**
+ * Contrôle de la date de naissance dans le formulaire toutes les dates sont acceptés sauf celle d'aujourd'hui et retourne true si c'est respecté ou false.
+ */
 function birthdateControl(){
 birthdateInput.addEventListener("input", function() {
   const birthdateStr = birthdateInput.value;
@@ -123,7 +132,9 @@ birthdateInput.addEventListener("input", function() {
 });
 }
 birthdateControl();
-
+/**
+ * Contrôle du nombre de tournoi dans le formulaire avec une saisie de chiffre et retourne true si c'est respecté ou false.
+ */
 function tournamentControl() {
   tournamentInput.addEventListener("input", function() {
     const quantitytournament = tournamentInput.value
@@ -142,7 +153,9 @@ function tournamentControl() {
   })
 }
 tournamentControl();
-
+/**
+ * Contrôle de localisation dans le formulaire avec la sélection d'une ville et retourne true si c'est respecté ou false.
+ */
 function locationControl() {
   for (const radio of locationRadios) {
     radio.addEventListener("input", function() {
@@ -168,7 +181,9 @@ function locationControl() {
 }
 }
 locationControl()
-
+/**
+ * Contrôle des cgu dans le formulaire avec une case coché et retourne true si c'est respecté ou false.
+ */
 function cguControl() {
   cguInput.addEventListener("input", function() {
   const formDatacgu = document.querySelector(".formData:nth-child(8)");
@@ -185,7 +200,9 @@ function cguControl() {
 })
 }
 cguControl()
-
+/**
+ * Bouton qui envoie vers une nouvelle page si toutes les conditions précédentes sont respectés
+ */
 formRegister.addEventListener("submit", (e) => {
   e.preventDefault();
   if (firstNameControl && lastNameControl && emailControl && birthdateControl && tournamentControl && locationControl && cguControl) {
