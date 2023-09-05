@@ -30,6 +30,8 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
+  content.style.display = "flex";
+  confirmation.style.display = "none";
 }
 
 // close modal event
@@ -48,6 +50,18 @@ const regExmail = (value) => {
   return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
 }
 
+function controlvisual(x,y,z) {
+  if(x) {
+    y.removeAttribute("data-error");
+    y.removeAttribute("data-error-visible");
+    return true
+  } else {
+    y.setAttribute("data-error", z);
+    y.setAttribute("data-error-visible", "true");
+    return false
+  }
+}
+
 /**
  * firstNameControl, contrôle du prénom sur le champ firstNameInput avec le regexFirstLastName
  * Si le regex est respecté rien ne s'affiche et retourne true
@@ -59,15 +73,7 @@ function firstNameControl() {
 firstNameInput.addEventListener("input", function () {
   const firstName = firstNameInput.value;
   const formDataFirstName = document.querySelector(".formData:first-child");
-  if(regExFirstLastName(firstName)) {
-    formDataFirstName.removeAttribute("data-error");
-    formDataFirstName.removeAttribute("data-error-visible");
-    return true
-  } else {
-    formDataFirstName.setAttribute("data-error", "Ce champ doit contenir au minimum 2 caractères");
-    formDataFirstName.setAttribute("data-error-visible", "true");
-    return false
-  }
+  controlvisual(regExFirstLastName(firstName),formDataFirstName,"Ce champ doit contenir au minimum 2 caractères")
 })
 }
 firstNameControl()
@@ -78,15 +84,7 @@ function lastNameControl() {
 lastNameInput.addEventListener("input", function () {
   const lastName = lastNameInput.value;
   const formDataLastName = document.querySelector(".formData:nth-child(2)");
-  if(regExFirstLastName(lastName)) {
-    formDataLastName.removeAttribute("data-error");
-    formDataLastName.removeAttribute("data-error-visible");
-    return true
-  } else {
-    formDataLastName.setAttribute("data-error", "Ce champ doit contenir au minimum 2 caractères");
-    formDataLastName.setAttribute("data-error-visible", "true");
-    return false
-  }
+  controlvisual(regExFirstLastName(lastName),formDataLastName,"Ce champ doit contenir au minimum 2 caractères")
 })
 }
 lastNameControl()
@@ -97,15 +95,7 @@ function emailControl() {
 emailInput.addEventListener("input", function () {
   const email = emailInput.value;
   const formDataemail = document.querySelector(".formData:nth-child(3)");
-  if(regExmail(email)) {
-    formDataemail.removeAttribute("data-error");
-    formDataemail.removeAttribute("data-error-visible");
-    return true
-  } else {
-    formDataemail.setAttribute("data-error", "Email invalide");
-    formDataemail.setAttribute("data-error-visible", "true");
-    return false
-  }
+  controlvisual(regExmail(email),formDataemail,"Email invalide")
 })
 }
 emailControl()
@@ -119,16 +109,7 @@ birthdateInput.addEventListener("input", function() {
   const birthdate = new Date(birthdateStr);
   const today = new Date().setHours(0,0,0,0)
   const formDatabirthdate = document.querySelector(".formData:nth-child(4)");
-  
-   if (birthdate < today) {
-    formDatabirthdate.removeAttribute("data-error");
-    formDatabirthdate.removeAttribute("data-error-visible");
-    return true;
-  } else {
-    formDatabirthdate.setAttribute("data-error", "Vous devez entrer votre date de naissance");
-    formDatabirthdate.setAttribute("data-error-visible", "true");
-    return false;
-  }
+  controlvisual(birthdate < today,formDatabirthdate,"Vous devez entrer votre date de naissance")
 });
 }
 birthdateControl();
@@ -140,16 +121,7 @@ function tournamentControl() {
     const quantitytournament = tournamentInput.value
     const isNumeric = /^\d+$/.test(quantitytournament);
     const formDatatournament = document.querySelector(".formData:nth-child(5)");
-    if (isNumeric) {
-      formDatatournament.removeAttribute("data-error");
-      formDatatournament.removeAttribute("data-error-visible");
-      return true;
-    } else {
-      formDatatournament.setAttribute("data-error", "Vous devez entrer un nombre");
-      formDatatournament.setAttribute("data-error-visible", "true");
-      return false;
-    }
-    
+    controlvisual(isNumeric,formDatatournament,"Vous devez entrer un nombre")    
   })
 }
 tournamentControl();
@@ -168,15 +140,7 @@ function locationControl() {
           break;
         }
       }
-      if (isAtLeastOneChecked) {
-        formDataLocation.removeAttribute("data-error");
-        formDataLocation.removeAttribute("data-error-visible");
-        return true;
-      } else {
-        formDataLocation.setAttribute("data-error", "Vous devez sélectionner un lieu");
-        formDataLocation.setAttribute("data-error-visible", "true");
-        return false;
-  }
+      controlvisual(isAtLeastOneChecked,formDataLocation,"Vous devez sélectionner un lieu")
 })
 }
 }
@@ -187,16 +151,7 @@ locationControl()
 function cguControl() {
   cguInput.addEventListener("input", function() {
   const formDatacgu = document.querySelector(".formData:nth-child(8)");
-
-  if(cguInput.checked) {
-    formDatacgu.removeAttribute("data-error");
-    formDatacgu.removeAttribute("data-error-visible");
-    return true;
-    } else {
-    formDatacgu.setAttribute("data-error", "Avez-vous lu les conditions générales d'utilisation ?");
-    formDatacgu.setAttribute("data-error-visible", "true");
-    return false;
-  }
+    controlvisual(cguInput.checked,formDatacgu,"Avez-vous lu les conditions générales d'utilisation ?")
 })
 }
 cguControl()
