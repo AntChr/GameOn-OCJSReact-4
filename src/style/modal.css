@@ -83,14 +83,19 @@ img {
     position: relative;
     z-index: 3;
   }
+  .main-navbar {
+    position: absolute;
+    right: 0;
+    z-index: 3;
+    margin-right: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    background-color: #fff;
+  }
 }
 .main-navbar {
-  position: absolute;
-  right: 0;
-  z-index: 3;
   margin-right: 10px;
   border-radius: 5px;
-  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
   background-color: #fff;
 }
 
@@ -429,7 +434,7 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  height: 750px;
+  height: 740px;
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);

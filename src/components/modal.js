@@ -70,98 +70,123 @@ function controlvisual(x,y,z) {
  * ![Illustration de l'operation](../docs-img/prenom.png)
  */
 function firstNameControl() {
+  const firstName = firstNameInput.value;
+  const formDataFirstName = document.querySelector(".formData:first-child");
+  return controlvisual(regExFirstLastName(firstName),formDataFirstName,"Ce champ doit contenir au minimum 2 caractères")}
 firstNameInput.addEventListener("input", function () {
   const firstName = firstNameInput.value;
   const formDataFirstName = document.querySelector(".formData:first-child");
   controlvisual(regExFirstLastName(firstName),formDataFirstName,"Ce champ doit contenir au minimum 2 caractères")
 })
-}
-firstNameControl()
+
 /**
  * Contrôle du nom dans le formulaire avec un minimum de deux caractères et retourne true si c'est respecté ou false.
  */
 function lastNameControl() {
+  const lastName = lastNameInput.value;
+  const formDataLastName = document.querySelector(".formData:nth-child(2)")
+  return controlvisual(regExFirstLastName(lastName),formDataLastName,"Ce champ doit contenir au minimum 2 caractères")
+}
 lastNameInput.addEventListener("input", function () {
   const lastName = lastNameInput.value;
   const formDataLastName = document.querySelector(".formData:nth-child(2)");
   controlvisual(regExFirstLastName(lastName),formDataLastName,"Ce champ doit contenir au minimum 2 caractères")
 })
-}
-lastNameControl()
 /**
  * Contrôle du mail dans le formulaire pour respecter le format d'un mail et retourne true si c'est respecté ou false.
  */
 function emailControl() {
+  const email = emailInput.value
+  const formDataemail = document.querySelector(".formData:nth-child(3)")
+  return controlvisual(regExmail(email),formDataemail,"Email invalide")
+}
 emailInput.addEventListener("input", function () {
   const email = emailInput.value;
-  const formDataemail = document.querySelector(".formData:nth-child(3)");
+  const formDataemail = document.querySelector(".formData:nth-child(3)")
   controlvisual(regExmail(email),formDataemail,"Email invalide")
 })
-}
-emailControl()
-
 /**
  * Contrôle de la date de naissance dans le formulaire toutes les dates sont acceptés sauf celle d'aujourd'hui et retourne true si c'est respecté ou false.
  */
 function birthdateControl(){
+  const birthdateStr = birthdateInput.value
+  const birthdate = new Date(birthdateStr)
+  const today = new Date().setHours(0,0,0,0)
+  const formDatabirthdate = document.querySelector(".formData:nth-child(4)")
+  return controlvisual(birthdate < today,formDatabirthdate,"Vous devez entrer votre date de naissance")
+}
 birthdateInput.addEventListener("input", function() {
   const birthdateStr = birthdateInput.value;
   const birthdate = new Date(birthdateStr);
   const today = new Date().setHours(0,0,0,0)
   const formDatabirthdate = document.querySelector(".formData:nth-child(4)");
   controlvisual(birthdate < today,formDatabirthdate,"Vous devez entrer votre date de naissance")
-});
-}
-birthdateControl();
+})
 /**
  * Contrôle du nombre de tournoi dans le formulaire avec une saisie de chiffre et retourne true si c'est respecté ou false.
  */
 function tournamentControl() {
+  const quantitytournament = tournamentInput.value
+    const isNumeric = /^\d+$/.test(quantitytournament)
+    const formDatatournament = document.querySelector(".formData:nth-child(5)")
+    return controlvisual(isNumeric,formDatatournament,"Vous devez entrer un nombre")
+}
   tournamentInput.addEventListener("input", function() {
     const quantitytournament = tournamentInput.value
     const isNumeric = /^\d+$/.test(quantitytournament);
     const formDatatournament = document.querySelector(".formData:nth-child(5)");
     controlvisual(isNumeric,formDatatournament,"Vous devez entrer un nombre")    
   })
-}
-tournamentControl();
+
+
 /**
  * Contrôle de localisation dans le formulaire avec la sélection d'une ville et retourne true si c'est respecté ou false.
  */
+const formDataLocation = document.querySelector(".formData:nth-child(7)")
 function locationControl() {
   for (const radio of locationRadios) {
     radio.addEventListener("input", function() {
-      const formDataLocation = document.querySelector(".formData:nth-child(7)");
-      let isAtLeastOneChecked = false;
+      validateLocation()
+    });
+  }
+}
 
-      for (const radio of locationRadios) {
-        if (radio.checked) {
-          isAtLeastOneChecked = true;
-          break;
-        }
-      }
-      controlvisual(isAtLeastOneChecked,formDataLocation,"Vous devez sélectionner un lieu")
-})
+function validateLocation() {
+  let isAtLeastOneChecked = false;
+
+  for (const radio of locationRadios) {
+    if (radio.checked) {
+      isAtLeastOneChecked = true;
+      break;
+    }
+  }
+
+  return controlvisual(isAtLeastOneChecked, formDataLocation, "Vous devez sélectionner un lieu");
 }
-}
+validateLocation()
 locationControl()
+
 /**
  * Contrôle des cgu dans le formulaire avec une case coché et retourne true si c'est respecté ou false.
  */
 function cguControl() {
+  const formDatacgu = document.querySelector(".formData:nth-child(8)");
+  return controlvisual(cguInput.checked,formDatacgu,"Avez-vous lu les conditions générales d'utilisation ?")
+  
+}
   cguInput.addEventListener("input", function() {
   const formDatacgu = document.querySelector(".formData:nth-child(8)");
     controlvisual(cguInput.checked,formDatacgu,"Avez-vous lu les conditions générales d'utilisation ?")
 })
-}
-cguControl()
 /**
  * Bouton qui envoie vers une nouvelle page si toutes les conditions précédentes sont respectés
  */
 formRegister.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (firstNameControl && lastNameControl && emailControl && birthdateControl && tournamentControl && locationControl && cguControl) {
+  if (firstNameControl() && lastNameControl() && emailControl() && birthdateControl() && tournamentControl() && validateLocation() && cguControl()) {
     content.style.display = "none"
     confirmation.style.display = "flex"
+  } else {
+    alert("Veuillez bien remplir le formulaire")
   }
 })
