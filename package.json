@@ -9,9 +9,6 @@
     "preview": "vite preview",
     "doc": "jsdoc -c ./jsdoc-config.json"
   },
-  "dependencies": {
-    "vue": "^3.3.4"
-  },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
     "jsdoc": "^4.0.2",
